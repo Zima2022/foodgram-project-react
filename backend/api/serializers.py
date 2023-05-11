@@ -7,7 +7,7 @@ from recipes.models import Ingredient, Recipe, RecipeIngredient, Tag
 from users.models import Follow, User
 
 
-class CustomUserSerializer(UserSerializer):
+class UserSerializer(UserSerializer):
     is_subscribed = serializers.SerializerMethodField()
 
     class Meta:
@@ -28,7 +28,7 @@ class CustomUserSerializer(UserSerializer):
         return Follow.objects.filter(user=user, author=obj).exists()
 
 
-class CustomUserCreateSerializer(UserCreateSerializer):
+class UserCreateSerializer(UserCreateSerializer):
     class Meta:
         model = User
         fields = (
@@ -65,7 +65,7 @@ class RecipeIngredientSerializer(serializers.ModelSerializer):
 
 
 class RecipeReadSerializer(serializers.ModelSerializer):
-    author = CustomUserSerializer(read_only=True)
+    author = UserSerializer(read_only=True)
     tags = TagSerializer(many=True, read_only=True)
     ingredients = RecipeIngredientSerializer(
         many=True, source='recipeingredients', read_only=True)
@@ -111,7 +111,7 @@ class RecipeIngredientCreateSerializer(serializers.ModelSerializer):
 
 
 class RecipeSerializer(serializers.ModelSerializer):
-    author = CustomUserSerializer(read_only=True)
+    author = UserSerializer(read_only=True)
     ingredients = RecipeIngredientCreateSerializer(many=True)
     tags = PrimaryKeyRelatedField(queryset=Tag.objects.all(), many=True)
     image = Base64ImageField()
@@ -152,7 +152,7 @@ class RecipeSerializer(serializers.ModelSerializer):
         tags = validated_data.pop('tags')
         super().update(instance, validated_data)
         instance.tags.set(tags)
-        RecipeIngredient.objects.filter(recipe=instance).delete()
+        instance.ingredients.clear()
         self.create_ingredients(instance, ingredients)
         return instance
 
@@ -172,7 +172,7 @@ class RecipeShortSerializer(serializers.ModelSerializer):
         )
 
 
-class FollowSerializer(CustomUserSerializer):
+class FollowSerializer(UserSerializer):
     recipes = serializers.SerializerMethodField()
     recipe_count = serializers.SerializerMethodField(
         method_name='get_recipes_count')

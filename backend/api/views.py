@@ -11,17 +11,17 @@ from rest_framework.response import Response
 from api.filters import IngredientFilter, RecipeFilter
 from api.pagination import CustomPagination
 from api.permissions import IsAdminOrReadOnly, IsAuthorOrReadOnly
-from api.serializers import (CustomUserSerializer, FollowSerializer,
-                             IngredientSerializer, RecipeReadSerializer,
-                             RecipeSerializer, RecipeShortSerializer,
-                             TagSerializer)
+from api.serializers import (FollowSerializer, IngredientSerializer,
+                             RecipeReadSerializer, RecipeSerializer,
+                             RecipeShortSerializer, TagSerializer,
+                             UserSerializer)
 from recipes.models import Favorite, Ingredient, Recipe, ShoppingCart, Tag
 from users.models import Follow, User
 
 
 class UserViewSet(UserViewSet):
     queryset = User.objects.all()
-    serializer_class = CustomUserSerializer
+    serializer_class = UserSerializer
     pagination_class = CustomPagination
 
     @action(
