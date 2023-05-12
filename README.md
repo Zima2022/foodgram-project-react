@@ -1,6 +1,6 @@
 ## Проект: Foodgram - Продуктовый помощник
 
-![workflow](https://github.com/zima2022/foodgram-project-react/actions/workflows/yamdb_workflow.yml/badge.svg)
+![workflow](https://github.com/zima2022/foodgram-project-react/actions/workflows/main.yml/badge.svg)
 
 ### Описание
 
