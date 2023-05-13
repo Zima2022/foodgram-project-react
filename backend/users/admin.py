@@ -13,4 +13,5 @@ class UserAdmin(admin.ModelAdmin):
         'last_name',
         'password',
     )
-    list_filter = ('username', 'email')
+    list_filter = ('username', 'email',)
+    search_fields = ('username', 'email', 'first_name', 'last_name',)
