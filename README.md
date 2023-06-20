@@ -17,12 +17,6 @@
 - Nginx
 - Docker
 - Postgres
-### Доступ к сервису
-Адрес: http://158.160.1.70/
-
-Логин: iamutin@yandex.ru
-
-Пароль: admin
 
 ### Об авторах: 
 [Ямутин Василий](https://github.com/zima2022)
